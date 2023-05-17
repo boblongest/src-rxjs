@@ -1,4 +1,4 @@
-import { mergeMap, concatMap, from, delay } from 'rxjs';
+import { mergeMap, from } from 'rxjs';
 import axios from 'axios';
 
 const urls = [
@@ -14,7 +14,7 @@ from(urls)
       return axios.get(url, { headers: { 'Accept-Encoding': 'application/json', } })
     })
   ).subscribe((response) => { 
-    console.log("mergeMap:" + response.data.name)
+    console.log("mergeMap 1:" + response.data.name)
   });
   
 // Example 2 - with a chained URL request");
@@ -27,6 +27,6 @@ from(urls)
       return axios.get(`https://pokeapi.co/api/v2/ability/${poke.data.abilities[0].ability.name}`, { headers: { 'Accept-Encoding': 'application/json', } })
     })
   ).subscribe((response) => { 
-    console.log("mergeMap:" + response.data.name)
+    console.log("mergeMap 2:" + response.data.name)
   });
   

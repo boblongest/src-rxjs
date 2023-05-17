@@ -1,4 +1,4 @@
-import { mergeMap, concatMap, from, delay } from 'rxjs';
+import { mergeMap, concatMap, from } from 'rxjs';
 import axios from 'axios';
 
 const urls = [
