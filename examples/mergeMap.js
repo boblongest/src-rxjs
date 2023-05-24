@@ -1,4 +1,4 @@
-import { mergeMap, from } from 'rxjs';
+import { mergeMap, from, of, interval, map, take } from 'rxjs';
 import axios from 'axios';
 
 const headers = { headers: { 'Accept-Encoding': 'application/json', } }
@@ -32,3 +32,38 @@ from(urls)
     console.log("mergeMap 2:" + response.data.name)
   });
   
+// Example 3 - simple display of mergemap for marbles
+const letters = of('a', 'b', 'c');    // collection of letters
+const result = letters.pipe(
+  mergeMap(x => interval(100)         // over intervals of 100ms
+    .pipe(    
+      take(3),                        // take the first 3 emitted values
+      map(i => x + i)                 // append a number to each item in the collection
+    )    
+  )
+);
+
+result.subscribe(x => console.log("simple 3:" + x));
+
+/*
+Generated marbles at https://thinkrx.io/rxjs/mergeMap/
+
+const { rxObserver, palette } = require('api/v0.3');
+const { of, from, timer, pipe, interval } = require('rxjs');
+const { zip, take, map, mergeMap, delayWhen } = require('rxjs/operators');
+
+const letters = of('a', 'b', 'c');
+const result = letters.pipe(
+    mergeMap(x => interval(100)
+      .pipe(
+        take(3),
+        map(i => x + i)
+      )
+    )
+  );
+
+// visualization
+letters.subscribe(rxObserver('source$'));
+result.subscribe(rxObserver('mergeMap( timer(0, 3).take(3) )'));
+
+*/
